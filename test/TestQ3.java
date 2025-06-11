@@ -9,6 +9,8 @@ import utils.IO;
 
 public class TestQ3 {
 
+    static boolean mostrar_erros = false;
+
     public static void main(String[] args) {
 
         //Enable assertions
@@ -22,7 +24,7 @@ public class TestQ3 {
         acertos = testQ3();
         mostrarConceitoTabela(acertos);
 
-        IO.imprimir("###############################");
+        // IO.imprimir("###############################");
 
         if (acertos < 0.99) {
             System.exit(1);
@@ -78,9 +80,6 @@ public class TestQ3 {
     public static double testQ3() {
 
         //Variáveis
-        //Parâmetros para os testes
-        int n_testes = 100; //Número de testes
-
         List<Teste> testes = new LinkedList<>();
         List<Teste> testes_incorretos = new LinkedList<>();
 
@@ -89,7 +88,6 @@ public class TestQ3 {
 
         //Mensagem padrão a ser mostrada caso o teste seja incorreto
         String texto_erro = "## Saída Incorreta!! ##";
-        // String texto_ok   = "## Testes corretos! ##";
 
         //Teste 0
         testes.add(new Teste("3\n6\n5\n28\n", "6 eh perfeito\n5 nao eh perfeito\n28 eh perfeito\n"));
@@ -104,7 +102,7 @@ public class TestQ3 {
 
         for ( Teste teste : testes) {
             try {
-                //Obtém a saída do método
+                //Obtém a saída do método);
                 teste.setSaidaObtida(obterSaidaPadrao(teste.getEntrada()));
 
                 // Verifica a saída
@@ -121,20 +119,22 @@ public class TestQ3 {
 
         System.out.println();
 
-        //Exibe os testes incorretos, caso java
+        //Exibe os testes incorretos, caso haja
         if(testes_incorretos.size() > 0) {
-            IO.imprimir("### Testes Incorretos ###");
-            for (Teste teste : testes_incorretos) {
-                IO.imprimir("Entrada:\n" + teste.getEntrada());
-                IO.imprimir("Saída Esperada:\n" + teste.saidaEsperada + "\n");
-                IO.imprimir("Saída Obtida:\n" + teste.saidaObtida + "\n");
-                IO.imprimir("-------------------------");
+            if( mostrar_erros ){
+                IO.imprimir("### Testes Incorretos ###");
+                for (Teste teste : testes_incorretos) {
+                    IO.imprimir("Entrada:\n" + teste.getEntrada());
+                    IO.imprimir("Saída Esperada:\n" + teste.saidaEsperada + "\n");
+                    IO.imprimir("Saída Obtida:\n" + teste.saidaObtida + "\n");
+                    IO.imprimir("-------------------------");
+                }
             }
         } else {
             IO.imprimir("### Todos os testes passaram! ###");
         }
-        //Exibe o total de acertos
 
+        //Retorna o total de acertos
         return (double) total_acertos / total_testes;
     }
 }
