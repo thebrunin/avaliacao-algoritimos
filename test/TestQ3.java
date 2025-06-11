@@ -1,12 +1,13 @@
 //Data: 09/06/2025
 //Conteúdo: Avaliação prática
 package test;
-
 import java.io.*;
-import questoes.Q2;
+import java.util.LinkedList;
+import java.util.List;
+import questoes.Q3;
 import utils.IO;
 
-public class TestQ2 {
+public class TestQ3 {
 
     public static void main(String[] args) {
 
@@ -17,8 +18,8 @@ public class TestQ2 {
         double acertos;
 
         IO.imprimir("###############################");
-        IO.imprimir("##### Testes - Questão 02 #####");
-        acertos = testQ2();
+        IO.imprimir("##### Testes - Questão 03 #####");
+        acertos = testQ3();
         mostrarConceitoTabela(acertos);
 
         IO.imprimir("###############################");
@@ -63,7 +64,7 @@ public class TestQ2 {
         System.setOut(new PrintStream(out));
 
         // Executa o método a ser testado
-        Q2.resolverSenhaFixa();
+        Q3.resolverNumeroPerfeito();
 
         System.setIn(originalIn);  // restaura entrada padrão
         System.setOut(originalOut); // Restaura a saída padrão original
@@ -74,16 +75,15 @@ public class TestQ2 {
 
     }
 
-    public static double testQ2() {
+    public static double testQ3() {
 
         //Variáveis
         //Parâmetros para os testes
         int n_testes = 100; //Número de testes
-        String[] saida_esperada = new String[n_testes];
-        String[] entrada = new String[n_testes];
-        String saida_obtida;
 
-        int id_teste;
+        List<Teste> testes = new LinkedList<>();
+        List<Teste> testes_incorretos = new LinkedList<>();
+
         int total_acertos = 0;
         int total_testes;
 
@@ -92,43 +92,48 @@ public class TestQ2 {
         // String texto_ok   = "## Testes corretos! ##";
 
         //Teste 0
-        id_teste = 0;
-        entrada[id_teste] = "2200\n1020\n2022\n2002\n2002\n";
-        saida_esperada[id_teste] = "Senha Invalida\nSenha Invalida\nSenha Invalida\nAcesso Permitido\n";
-        saida_esperada[id_teste] = saida_esperada[id_teste].trim();
+        testes.add(new Teste("3\n6\n5\n28\n", "6 eh perfeito\n5 nao eh perfeito\n28 eh perfeito\n"));
 
         //Teste 1
-        id_teste++;
-        entrada[id_teste] = "2002";
-        saida_esperada[id_teste] = "Acesso Permitido\n";
-        saida_esperada[id_teste] = saida_esperada[id_teste].trim();
+        testes.add(new Teste("1\n10\n", "10 nao eh perfeito\n"));
 
         //Teste 2
-        id_teste++;
-        entrada[id_teste] = "23154\n45487\n9\n-121\n000\n145478\n12478789\n1254654877\n100000\n-2002\n523132\n213245478\n2002\n";
-        saida_esperada[id_teste] = "Senha Invalida\nSenha Invalida\nSenha Invalida\nSenha Invalida\nSenha Invalida\nSenha Invalida\nSenha Invalida\nSenha Invalida\nSenha Invalida\nSenha Invalida\nSenha Invalida\nSenha Invalida\nAcesso Permitido\n";
-        saida_esperada[id_teste] = saida_esperada[id_teste].trim();
+        testes.add(new Teste("8\n5\n5\n6\n6\n10\n10\n28\n29\n", "5 nao eh perfeito\n5 nao eh perfeito\n6 eh perfeito\n6 eh perfeito\n10 nao eh perfeito\n10 nao eh perfeito\n28 eh perfeito\n29 nao eh perfeito\n"));
 
-        total_testes = id_teste + 1;
+        total_testes = testes.size();
 
-        for (int indice_teste = 0; indice_teste < total_testes; indice_teste++) {
+        for ( Teste teste : testes) {
             try {
-                // System.out.println(indice_teste + 1 + " - Testando com entrada: " + entrada_int[indice_teste]);
                 //Obtém a saída do método
-                saida_obtida = obterSaidaPadrao(entrada[indice_teste]);
+                teste.setSaidaObtida(obterSaidaPadrao(teste.getEntrada()));
 
                 // Verifica a saída
-                assert saida_esperada[indice_teste].equals(saida_obtida) : texto_erro;
+                assert teste.compararSaidas() : texto_erro;
 
                 System.out.print("✅");
                 total_acertos++;
 
             } catch (AssertionError error) {
                 System.out.print("❌");
+                testes_incorretos.add(teste);
             }
         }
 
         System.out.println();
+
+        //Exibe os testes incorretos, caso java
+        if(testes_incorretos.size() > 0) {
+            IO.imprimir("### Testes Incorretos ###");
+            for (Teste teste : testes_incorretos) {
+                IO.imprimir("Entrada:\n" + teste.getEntrada());
+                IO.imprimir("Saída Esperada:\n" + teste.saidaEsperada + "\n");
+                IO.imprimir("Saída Obtida:\n" + teste.saidaObtida + "\n");
+                IO.imprimir("-------------------------");
+            }
+        } else {
+            IO.imprimir("### Todos os testes passaram! ###");
+        }
+        //Exibe o total de acertos
 
         return (double) total_acertos / total_testes;
     }

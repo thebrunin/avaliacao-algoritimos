@@ -1,5 +1,5 @@
-import utils.IO;
 import questoes.*;
+import utils.IO;
 
 public class Main{
 
@@ -7,8 +7,8 @@ public class Main{
 
         IO.imprimir("##### Resolver - Algoritmos e Estruturas de Dados #####");
         
-        Q1.resolver();
-        Q2.resolver();
+        // Q1.resolver();
+        // Q2.resolver();
         Q3.resolver();
     }
 }
