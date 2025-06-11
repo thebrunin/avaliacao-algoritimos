@@ -24,7 +24,7 @@ public class TestQ3 {
         acertos = testQ3();
         mostrarConceitoTabela(acertos);
 
-        // IO.imprimir("###############################");
+        IO.imprimir("###############################\n");
 
         if (acertos < 0.99) {
             System.exit(1);
