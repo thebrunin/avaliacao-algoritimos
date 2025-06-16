@@ -20,9 +20,6 @@ public class Q1 {
     public static void resolverQuadradoEAoCubo(int n){
 
         // Sua solução aqui
-        for(int i=1; i<=n; i++){
-            System.out.print(i + " " + i*i + " " + i*i*i);
-        }
         
     }
 
