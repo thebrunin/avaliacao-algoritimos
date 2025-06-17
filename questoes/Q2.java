@@ -12,13 +12,24 @@ public class Q2 {
         //Entrada
 
         //Processamento
-        // resolverSenhaFixa();
+        resolverSenhaFixa();
         
     }
 
     public static void resolverSenhaFixa(){
 
         // Sua solução aqui
+        while(true) {
+            int n = IO.lerValorInteiro();
+
+            if(n == 2002){
+                IO.imprimir("Acesso Permitido");
+                break;
+            }
+
+            IO.imprimir("Senha Invalida");
+
+        }
         
     }
 
